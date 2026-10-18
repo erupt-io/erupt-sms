@@ -1,0 +1,81 @@
+key,zh-CN,en-US
+SMS,短信,SMS
+Workspace,工作区,Workspace
+Channel,通道,Channel
+Channels,短信通道,Channels
+Templates,短信模板,Templates
+Messages,发送记录,Messages
+Verification codes,验证码,Verification codes
+Blacklist,黑名单,Blacklist
+Name,名称,Name
+Vendor,服务商,Vendor
+"Console (no vendor, logs only)",控制台（不接厂商，只记日志）,"Console (no vendor, logs only)"
+Alibaba Cloud,阿里云,Alibaba Cloud
+Tencent Cloud,腾讯云,Tencent Cloud
+Huawei Cloud,华为云,Huawei Cloud
+Baidu Cloud,百度云,Baidu Cloud
+JD Cloud,京东云,JD Cloud
+China Telecom Cloud,天翼云,China Telecom Cloud
+Qiniu,七牛云,Qiniu
+NetEase Yunxin,网易云信,NetEase Yunxin
+Yunpian,云片,Yunpian
+UniSMS,合一短信,UniSMS
+Cloopen,容联云,Cloopen
+Emay,亿美软通,Emay
+Zhutong,助通,Zhutong
+Lianlu,联麓,Lianlu
+Dingzhong,鼎众,Dingzhong
+Chuanglan,创蓝,Chuanglan
+Jiguang,极光,Jiguang
+Buding,布丁云,Buding
+China Mobile MAS,移动云 MAS,China Mobile MAS
+Luosimao,螺丝帽,Luosimao
+Submail,赛邮,Submail
+Danmi,单米,Danmi
+Yixintong,亿信通,Yixintong
+Access key,Access Key,Access key
+Secret,Secret,Secret
+Signature,签名,Signature
+SDK app ID,SDK AppID,SDK app ID
+Vendor settings,服务商参数,Vendor settings
+Codes per phone per day,每号每日验证码上限,Codes per phone per day
+Enabled,启用,Enabled
+Default,默认通道,Default
+Not default,非默认,Not default
+Code,代码,Code
+Disabled,停用,Disabled
+Template,模板,Template
+Vendor template ID,服务商模板 ID,Vendor template ID
+Kind,类型,Kind
+Verification code,验证码,Verification code
+Notification,通知,Notification
+Marketing,营销,Marketing
+Content,内容,Content
+Parameters,参数,Parameters
+Phones,手机号,Phones
+Status,状态,Status
+Vendor response,服务商返回,Vendor response
+Sent at,发送时间,Sent at
+Resend,重发,Resend
+Phone,手机号,Phone
+Verification code,验证码,Verification code
+Expires at,过期时间,Expires at
+Used,已使用,Used
+Unused,未使用,Unused
+Sent,已发送,Sent
+Failed,失败,Failed
+Reason,原因,Reason
+sms.supplier_unknown,不支持的服务商,Unsupported vendor
+sms.extra_unknown,该服务商没有这个参数,The vendor has no such setting
+sms.channel_unknown,通道不存在或已停用,Unknown or disabled channel
+sms.phones_empty,请填写手机号,No phone given
+sms.blacklisted,手机号在黑名单中,The phone is blacklisted
+sms.param_missing,缺少模板参数,A template parameter is missing
+sms.phone_invalid,手机号格式不正确,Invalid phone number
+sms.daily_limit,今日验证码次数已达上限,Daily code limit reached
+sms.resend_wait,请稍后再获取验证码,Please wait before asking for another code
+sms.code_template_missing,该通道没有启用的验证码模板,The channel has no enabled code template
+sms.send_failed,短信发送失败,The message could not be sent
+sms.template_unknown,模板不存在或已停用,Unknown or disabled template
+sms.default_channel_missing,没有启用的默认通道,No enabled default channel
+sms.code_exists,该通道已有相同代码的模板,A template with this code already exists on the channel
