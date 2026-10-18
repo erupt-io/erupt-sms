@@ -19,13 +19,11 @@ mvn spring-boot:run
 # http://localhost:8080  erupt / erupt
 ```
 
-No vendor account yet? Add a channel with the vendor **Console**: it sends nothing, logs every message and reports it as sent, so templates, messages and verification codes can be tried end to end. `ConsoleSms.messages()` holds the last 200 for a test to read.
-
 ## What you get
 
 | Menu | What |
 |---|---|
-| Channels | a vendor account, one of them the default for code that names none: the Console vendor for trying things out, Alibaba Cloud, Tencent Cloud, Huawei Cloud, Baidu, JD, CTYun, Qiniu, NetEase, Yunpian, UniSMS, Cloopen, Emay, Chuanglan, Jiguang, Submail and the rest SMS4J supports; vendor-specific settings go in as `key=value` lines |
+| Channels | a vendor account, one of them the default for code that names none: Alibaba Cloud, Tencent Cloud, Huawei Cloud, Baidu, JD, CTYun, Qiniu, NetEase, Yunpian, UniSMS, Cloopen, Emay, Chuanglan, Jiguang, Submail and the rest SMS4J supports; vendor-specific settings go in as `key=value` lines |
 | Templates | the templates approved at the vendor, each with a code the application sends by; the `${name}` placeholders of the content become the parameters, in the vendor's order |
 | Messages | saving one sends it to one phone or many; the row keeps the rendered text, the outcome and the vendor's answer; resend from the row |
 | Verification codes | every code issued through the API below, with its outcome |

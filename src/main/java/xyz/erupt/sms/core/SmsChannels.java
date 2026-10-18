@@ -39,12 +39,10 @@ public class SmsChannels {
         this.eruptDao = eruptDao;
     }
 
-    // SMS4J's executor and store are set up once; the suppliers come from rows, so none here.
-    // The console vendor joins the built-in ones, for trying the module without an account
+    // SMS4J's executor and store are set up once; the suppliers come from rows, so none here
     @PostConstruct
     public void init() {
         SEInitializer.initializer().fromConfig(new SmsConfig(), List.of());
-        ProviderFactoryHolder.registerFactory(new ConsoleSms.Factory());
     }
 
     @EventListener(ApplicationReadyEvent.class)

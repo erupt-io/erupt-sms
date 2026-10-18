@@ -26,11 +26,10 @@ import xyz.erupt.core.service.EruptService;
 import xyz.erupt.core.util.Erupts;
 import xyz.erupt.core.view.TableQuery;
 import xyz.erupt.jpa.dao.EruptDao;
-import xyz.erupt.sms.core.ConsoleSms;
 import xyz.erupt.sms.core.EruptSms;
 import xyz.erupt.sms.core.SmsChannels;
 import xyz.erupt.sms.model.*;
-import xyz.erupt.sms.core.SmsCodeService;
+import xyz.erupt.sms.core.SmsSender;
 import xyz.erupt.upms.service.EruptTokenService;
 
 import java.lang.reflect.Proxy;
@@ -72,7 +71,7 @@ class SmsTest {
     private EruptTokenService eruptTokenService;
 
     @Resource
-    private SmsCodeService codeService;
+    private SmsSender sender;
 
     @Resource
     private EruptSms sms;
@@ -217,52 +216,18 @@ class SmsTest {
 
     @Test
     void codesAreIssuedRateLimitedAndCheckedOnce() {
-        codeService.send(channel, "13900000001", Map.of("product", "erupt"));
+        sender.sendCode(channel, "13900000001", Map.of("product", "erupt"));
         assertEquals("SMS_2", sent.get(0).templateId());
         assertEquals(List.of("product", "code", "minutes"), new ArrayList<>(sent.get(0).params().keySet()), "the template's order, code and minutes filled in");
         assertEquals("5", sent.get(0).params().get("minutes"));
         String code = sent.get(0).params().get("code");
         assertEquals(6, code.length());
 
-        assertThrows(EruptWebApiRuntimeException.class, () -> codeService.send(channel, "13900000001", null), "too soon for another");
-        assertFalse(codeService.verify(channel, "13900000001", "000000"));
-        assertTrue(codeService.verify(channel, "13900000001", code));
-        assertFalse(codeService.verify(channel, "13900000001", code), "a code is good once");
-        assertThrows(EruptWebApiRuntimeException.class, () -> codeService.send(channel, "not-a-phone", null));
-    }
-
-    @Test
-    void theConsoleVendorNeedsNoAccount() {
-        SmsChannel console = new SmsChannel();
-        console.setName("Console");
-        console.setSupplier(ConsoleSms.SUPPLIER);
-        this.persist(console);
-        channels.register(console);
-        SmsTemplate template = new SmsTemplate();
-        template.setChannel(console);
-        template.setCode("WELCOME");
-        template.setName("Welcome");
-        template.setTemplateId("CONSOLE_1");
-        template.setKind(SmsTemplate.NOTICE);
-        template.setContent("Welcome ${name}");
-        this.persist(template);
-
-        this.workspace(console.getId());
-        JsonObject message = new JsonObject();
-        JsonObject ref = new JsonObject();
-        ref.addProperty("id", template.getId());
-        message.add("template", ref);
-        message.addProperty("phones", "13700000001");
-        JsonObject params = new JsonObject();
-        params.addProperty("name", "Eve");
-        message.add("params", params);
-        MetaContext.register(new MetaErupt(SmsMessage.class.getSimpleName()));
-        Object id = eruptModifyService.insertEruptData(EruptCoreService.getErupt(SmsMessage.class.getSimpleName()), message);
-        assertEquals(SmsMessage.SENT, eruptDao.find(SmsMessage.class, id).getStatus());
-        ConsoleSms.Message kept = ConsoleSms.messages().get(0);
-        assertEquals(List.of("13700000001"), kept.phones());
-        assertEquals("CONSOLE_1", kept.templateId());
-        assertEquals("Eve", kept.params().get("name"));
+        assertThrows(EruptWebApiRuntimeException.class, () -> sender.sendCode(channel, "13900000001", null), "too soon for another");
+        assertFalse(sender.verifyCode(channel, "13900000001", "000000"));
+        assertTrue(sender.verifyCode(channel, "13900000001", code));
+        assertFalse(sender.verifyCode(channel, "13900000001", code), "a code is good once");
+        assertThrows(EruptWebApiRuntimeException.class, () -> sender.sendCode(channel, "not-a-phone", null));
     }
 
     private enum Templates {ORDER_SHIPPED, LOGIN_CODE, NO_SUCH}

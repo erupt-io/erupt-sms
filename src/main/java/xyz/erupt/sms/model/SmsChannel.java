@@ -14,7 +14,6 @@ import xyz.erupt.annotation.sub_field.EditType;
 import xyz.erupt.annotation.sub_field.View;
 import xyz.erupt.annotation.sub_field.sub_edit.*;
 import xyz.erupt.jpa.model.MetaModel;
-import xyz.erupt.sms.core.ConsoleSms;
 import xyz.erupt.sms.proxy.SmsChannelDataProxy;
 
 /**
@@ -33,7 +32,6 @@ public class SmsChannel extends MetaModel {
     private String name;
 
     @EruptField(views = @View(title = "Vendor"), edit = @Edit(title = "Vendor", notNull = true, search = @Search, type = EditType.CHOICE, choiceType = @ChoiceType(vl = {
-            @VL(value = ConsoleSms.SUPPLIER, label = "Console (no vendor, logs only)"),
             @VL(value = SupplierConstant.ALIBABA, label = "Alibaba Cloud"), @VL(value = SupplierConstant.TENCENT, label = "Tencent Cloud"),
             @VL(value = SupplierConstant.HUAWEI, label = "Huawei Cloud"), @VL(value = SupplierConstant.BAIDU, label = "Baidu Cloud"),
             @VL(value = SupplierConstant.JDCLOUD, label = "JD Cloud"), @VL(value = SupplierConstant.CTYUN, label = "China Telecom Cloud"),
@@ -49,16 +47,13 @@ public class SmsChannel extends MetaModel {
     })))
     private String supplier;
 
-    @EruptField(views = @View(title = "Access key"), edit = @Edit(title = "Access key",
-            dynamic = @Dynamic(dependField = "supplier", condition = "value && value !== 'console'", match = Dynamic.Ctrl.NOTNULL)))
+    @EruptField(views = @View(title = "Access key"), edit = @Edit(title = "Access key", notNull = true))
     private String accessKeyId;
 
-    @EruptField(edit = @Edit(title = "Secret", type = EditType.PASSWORD,
-            dynamic = @Dynamic(dependField = "supplier", condition = "value && value !== 'console'", match = Dynamic.Ctrl.NOTNULL)))
+    @EruptField(edit = @Edit(title = "Secret", notNull = true, type = EditType.PASSWORD))
     private String accessKeySecret;
 
-    @EruptField(views = @View(title = "Signature"), edit = @Edit(title = "Signature", desc = "The approved signature shown at the front of every message",
-            dynamic = @Dynamic(dependField = "supplier", condition = "value && value !== 'console'", match = Dynamic.Ctrl.NOTNULL)))
+    @EruptField(views = @View(title = "Signature"), edit = @Edit(title = "Signature", notNull = true, desc = "The approved signature shown at the front of every message"))
     private String signature;
 
     @EruptField(views = @View(title = "SDK app ID"), edit = @Edit(title = "SDK app ID", desc = "Tencent, Huawei and some others need it"))

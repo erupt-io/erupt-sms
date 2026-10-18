@@ -48,12 +48,9 @@ public class EruptSms {
 
     private final SmsSender sender;
 
-    private final SmsCodeService codeService;
-
-    public EruptSms(EruptDao eruptDao, SmsSender sender, SmsCodeService codeService) {
+    public EruptSms(EruptDao eruptDao, SmsSender sender) {
         this.eruptDao = eruptDao;
         this.sender = sender;
-        this.codeService = codeService;
     }
 
     /** A channel other than the default, by the name shown in the admin. */
@@ -173,11 +170,11 @@ public class EruptSms {
         }
 
         public SmsCode send() {
-            return codeService.send(channel, phone, params);
+            return sender.sendCode(channel, phone, params);
         }
 
         public boolean verify(String code) {
-            return codeService.verify(channel, phone, code);
+            return sender.verifyCode(channel, phone, code);
         }
     }
 
